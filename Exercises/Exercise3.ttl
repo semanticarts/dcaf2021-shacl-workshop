@@ -1,6 +1,7 @@
 
 #################################################################
-#    Fix the data so that zero violations appear in the validation report
+#    This one is tricky. There are some problems related to sh:closed
+#    and some other problems related to sh:qualifiedValueShape.
 #################################################################
 
 
