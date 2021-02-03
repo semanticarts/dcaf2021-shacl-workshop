@@ -1,0 +1,64 @@
+
+#################################################################
+#    Write SHACL to catch SIX violations in the same frequent flyer
+#    Then create data for that frequent flyer to fix the violations
+#################################################################
+
+
+
+#################################################################
+#    Shapes
+#################################################################
+
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix : <https://ontologies.semanticarts.com/dcaf2021/dqw/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gist: <https://ontologies.semanticarts.com/gist/> .
+
+:FrequentFlyerShape 
+    a sh:NodeShape ;
+	sh:targetClass :FrequentFlyer ;
+	sh:property :ApplicationDateShape ,:BirthDateShape , :EmailAddressShape , :HomeAirportShape , :NameShape , :StreetAddressShape .
+
+:ApplicationDateShape
+    sh:message "Every frequent flyer needs exactly one application date" . 
+
+:BirthDateShape 
+    sh:message "Every frequent flyer needs exactly one date of birth" . 
+
+:EmailAddressShape
+    sh:message "Every frequent flyer needs exactly one email address" . 
+
+:HomeAirportShape
+    sh:message "Every frequent flyer needs exactly one home airport" . 
+
+:NameShape
+    sh:message "Every frequent flyer needs exactly one name" . 
+
+:StreetAddressShape
+    sh:message "Every frequent flyer needs exactly one street address" . 
+
+
+#################################################################
+#    Data
+#################################################################
+
+@prefix : <https://ontologies.semanticarts.com/dcaf2021/dqw/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gist: <https://ontologies.semanticarts.com/gist/> .
+
+:_ff_023641997 a :FrequentFlyer ;
+    gist:name "Steve Steward"^^xsd:string ;
+    :birthdate "1987-11-27"^^xsd:date ;
+    :applicationDate "2021-02-03"^^xsd:date ;
+    :homeAirport :_airport_SEA ;
+    :emailAddress "steve.steward@semanticarts.com"^^xsd:string ;
+    :streetAddress "667 Pine Lane, Seattle, WA, 98667"^^xsd:string .
+
+:_ff_999999999 a :FrequentFlyer .
+
+
+:_airport_SEA a :Airport .

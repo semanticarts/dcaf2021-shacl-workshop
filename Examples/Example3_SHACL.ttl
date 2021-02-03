@@ -1,0 +1,35 @@
+
+#################################################################
+#    Shapes
+#################################################################
+
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix : <https://ontologies.semanticarts.com/dcaf2021/dqw/>.
+:CustomerShape a sh:NodeShape ;
+	sh:targetClass :Customer ;
+	sh:property [
+		# a sh:PropertyShape ;
+		sh:path :owns ;
+		sh:qualifiedValueShape 
+			[ sh:class :Account ] ;
+        # sh:class :Account ;
+		sh:qualifiedMinCount 1 ;
+        # sh:minCount 1 ;
+		sh:message "Every customer needs an account";  ] .
+
+#################################################################
+#    Data
+#################################################################
+
+@prefix : <https://ontologies.semanticarts.com/dcaf2021/dqw/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:_customer001 a :Customer .
+# :_customer001 :owns :_account001 .
+# :_customer001 :owns [ a :Sailboat ] .
+
+# :_account001 a :Account .
+   

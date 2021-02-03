@@ -1,0 +1,46 @@
+@prefix : <https://ontologies.semanticarts.com/dcaf2021/dqw/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@base <https://ontologies.semanticarts.com/dcaf2021/dqw/> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+:owns rdf:type owl:ObjectProperty .
+
+#################################################################
+#    Classes
+#################################################################
+
+:Account rdf:type owl:Class .
+
+:Customer rdf:type owl:Class ;
+          owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty :owns ;
+                                owl:someValuesFrom :Account
+                              ] .
+
+#################################################################
+#    Individuals
+#################################################################
+
+:_account001 rdf:type owl:NamedIndividual ,
+  :Account .
+
+:_assertedCustomer rdf:type owl:NamedIndividual ,
+  :Customer .
+
+:_inferredCustomer rdf:type owl:NamedIndividual ;
+  :owns :_account001 .
+
+
+#################################################################
+#    SPARQL to find customers w/o accounts
+#################################################################
+
+# prefix : <https://ontologies.semanticarts.com/dcaf2021/dqw/>
+# SELECT ?customer WHERE {
+# 	?customer a :Customer .
+# 	FILTER NOT EXISTS { 
+# 		?customer :owns [ a :Account ] } }

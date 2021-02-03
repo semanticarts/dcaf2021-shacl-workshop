@@ -1,0 +1,26 @@
+
+#################################################################
+#    Data
+#################################################################
+
+@prefix : <https://ontologies.semanticarts.com/dcaf2021/dqw/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gist: <https://ontologies.semanticarts.com/gist/> .
+
+:_patient001 a :Patient ;
+    gist:name "Joseph Lambert"^^xsd:string ;
+    :birthdate "1976-06-24"^^xsd:date ;
+    :hasPrimaryCareProvider :_employee001 .
+
+:_patient002 a :Patient ;
+    gist:name "f"^^xsd:string ;
+    :birthdate "1993-12-02T00:00:00"^^xsd:date ;
+    :hasPrimaryCareProvider :_employee001 .
+
+:_employee001 a :MedicalDoctor ;
+:birthdate "1976-06-24"^^xsd:date ;
+:holdsDegree :DoctorOfMedicine ;
+    gist:name "Jill Smart"^^xsd:string .

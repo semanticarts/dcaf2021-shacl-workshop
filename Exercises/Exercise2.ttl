@@ -1,0 +1,79 @@
+
+#################################################################
+#    Fix the data so that zero violations appear in the validation report
+#################################################################
+
+
+#################################################################
+#    Shapes
+#################################################################
+
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix : <https://ontologies.semanticarts.com/dcaf2021/dqw/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gist: <https://ontologies.semanticarts.com/gist/> .
+
+:PatientShape 
+    a sh:NodeShape ;
+	sh:targetClass :Patient ;
+	sh:property :BirthDateShape ,
+                :HasPCPShape ,
+                :NameShape .
+
+:MedicalDoctorShape
+    a sh:NodeShape ;
+    sh:targetClass :MedicalDoctor ;
+    sh:property :BirthDateShape ,
+                :NameShape ,
+                [
+                    sh:path :holdsDegree ;
+                    sh:hasValue :DoctorOfMedicine ;
+                    sh:message "Every medical doctor must hold the degree Doctor of Medicine" ;
+                ] .
+
+:BirthDateShape 
+    sh:path :birthdate ;
+    sh:datatype xsd:date ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "This node needs exactly one valid date of birth" . 
+
+:HasPCPShape 
+    sh:path :hasPrimaryCareProvider ;
+    sh:class :MedicalDoctor ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "Every patient needs exactly one primary care provider" .
+
+:NameShape
+    sh:path gist:name ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "This node needs exactly one name" .
+
+#################################################################
+#    Data
+#################################################################
+
+@prefix : <https://ontologies.semanticarts.com/dcaf2021/dqw/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gist: <https://ontologies.semanticarts.com/gist/> .
+
+:_patient001 a :Patient ;
+    gist:name "Joseph Lambert"^^xsd:string ;
+    :birthdate "1976-06-24"^^xsd:date ;
+    :hasPrimaryCareProvider :_employee001 .
+
+:_patient002 a :Patient ;
+    gist:name ""^^xsd:string ;
+    :birthdate "1993-12-02T00:00:00"^^xsd:datetime ;
+    :hasPrimaryCareProvider :_employee002 .
+
+:_employee001 a :MedicalDoctor ;
+    gist:name "Jill Smart"^^xsd:string ;
+    gist:name "Jill smart"^^xsd:string .
