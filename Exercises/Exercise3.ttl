@@ -1,0 +1,95 @@
+
+#################################################################
+#    Fix the data so that zero violations appear in the validation report
+#################################################################
+
+
+#################################################################
+#    Shapes
+#################################################################
+
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix : <https://ontologies.semanticarts.com/dcaf2021/dqw/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gist: <https://ontologies.semanticarts.com/gist/> .
+
+:CityShape 
+    a sh:NodeShape ;
+    sh:closed true ;
+	sh:targetClass :USCity ;
+	sh:property :NameShape ,
+                [
+                    sh:path gist:directPartOf ;
+                    sh:qualifiedValueShape 
+			            [ sh:class :USCounty ] ;
+		            sh:qualifiedMinCount 1 ;
+                    sh:qualifiedMaxCount 1 ;
+                    sh:message "Every city must be part of exactly one county" ;
+                ] ,
+                [
+                    sh:path gist:directPartOf ;
+                    sh:qualifiedValueShape 
+			            [ sh:class :USState ] ;
+		            sh:qualifiedMinCount 1 ;
+                    sh:qualifiedMaxCount 1 ;
+                    sh:message "Every city must be part of exactly one state" ;
+                ] .
+
+:CountyShape 
+    a sh:NodeShape ;
+    sh:closed true ;
+	sh:targetClass :USCounty ;
+	sh:property :NameShape ,
+                [
+                    sh:path gist:directPartOf ;
+                    sh:qualifiedValueShape 
+			            [ sh:class :USState ] ;
+		            sh:qualifiedMinCount 1 ;
+                    sh:qualifiedMaxCount 1 ;
+                    sh:message "Every county must be part of exactly one state" ;
+                ] .
+
+:StateShape 
+    a sh:NodeShape ;
+    sh:closed true ;
+	sh:targetClass :USState ;
+	sh:property :NameShape .
+
+:NameShape
+    sh:path gist:name ;
+    sh:datatype xsd:string ;
+    sh:minLength 1 ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:message "This node needs exactly one name" .
+
+#################################################################
+#    Data
+#################################################################
+
+@prefix : <https://ontologies.semanticarts.com/dcaf2021/dqw/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix gist: <https://ontologies.semanticarts.com/gist/> .
+
+:_city_Austin_TX a :USCity ;
+    gist:name "City of Austin"^^xsd:string ;
+    gist:directPartOf :_county_Hays , :_county_Travis , :_county_Williamson , :_state_Texas ;
+    :capitalCityOf :_state_Texas .
+
+:_county_Hays a :USCounty ;
+    gist:name "Hays County"^^xsd:string ;
+    gist:directPartOf :_state_Texas .
+
+:_county_Travis a :USCounty ;
+    gist:name "Travis County"^^xsd:string ;
+    gist:directPartOf :_state_Texas .
+
+:_county_Williamson a :USCounty ;
+    gist:name "Williamson County"^^xsd:string ;
+    gist:directPartOf :_state_Texas .
+
+:_state_Texas a :USState ;
+    gist:name "Texas"^^xsd:string .
